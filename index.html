@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manajemen Data Diri</title>
+    <title>📋 Manajemen Data Diri</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- Tambahkan SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
@@ -26,13 +25,13 @@
       <input type="text" id="search" placeholder="🔍 Cari data..." />
     </header>
 
-    <div class="card">
+    <main class="card">
       <table>
         <thead>
           <tr>
-            <th>Nama</th>
-            <th>Umur</th>
-            <th>Alamat</th>
+            <th onclick="sortTable(0)">Nama ⬍</th>
+            <th onclick="sortTable(1)">Umur ⬍</th>
+            <th onclick="sortTable(2)">Alamat ⬍</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -42,9 +41,8 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </main>
 
-    <!-- Script harus terakhir -->
     <script src="script.js"></script>
   </body>
 </html>

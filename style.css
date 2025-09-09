@@ -5,14 +5,13 @@ body {
   padding: 0;
   background: #f5f7fb;
   color: #2d2d2d;
-  transition: background 0.4s ease, color 0.4s ease;
   line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 .dark-mode {
   background: #181a1f;
   color: #e5e5e5;
-  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* Tambahan transisi global */
@@ -43,8 +42,6 @@ header {
 header h1 {
   margin: 0;
   font-size: 1.8rem;
-  font-weight: 600;
-  letter-spacing: 1px;
 }
 
 .actions {
@@ -60,8 +57,6 @@ input#search {
   border: 1px solid #ccc;
   width: 60%;
   max-width: 400px;
-  font-size: 0.95rem;
-  transition: border 0.3s, box-shadow 0.3s;
 }
 
 input#search:focus {
@@ -80,7 +75,6 @@ input#search:focus {
   width: 92%;
   max-width: 900px;
   overflow-x: auto;
-  transition: background 0.4s ease, transform 0.3s ease;
 }
 
 .card:hover {
@@ -101,12 +95,7 @@ table {
 th,
 td {
   padding: 14px 12px;
-  text-align: left;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-tr {
-  transition: background 0.3s ease;
 }
 
 tr:hover {
@@ -122,10 +111,6 @@ th {
   background: #f3f4f6;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #444;
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 .dark-mode th {
@@ -139,25 +124,29 @@ th {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
   font-size: 0.9rem;
   font-weight: 500;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #2575fc, #6a11cb);
   color: white;
-  box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3);
+}
+
+.btn-delete {
+  background: #e63946;
+  color: white;
+}
+
+.btn-edit {
+  background: #fca311;
+  color: white;
 }
 
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* ✨ Animasi Fade */
@@ -173,5 +162,73 @@ th {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 📝 Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.dark-mode form label {
+  color: #e5e5e5;
+}
+
+form input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+form input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.25);
+  outline: none;
+}
+
+.dark-mode form input {
+  background: #2b2d33;
+  border: 1px solid #444;
+  color: #f0f0f0;
+}
+
+form button[type="submit"] {
+  margin-top: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+form button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 📱 Responsif */
+@media (max-width: 600px) {
+  form {
+    gap: 12px;
+  }
+
+  form input,
+  form button {
+    font-size: 0.9rem;
   }
 }
