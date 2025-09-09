@@ -45,8 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.deleteData = (index) => {
-    let data = JSON.parse(localStorage.getItem("dataDiri")) || [];
-
+    let data = getData();
     Swal.fire({
       title: "Yakin ingin menghapus?",
       text: "Data yang dihapus tidak bisa dikembalikan!",
@@ -59,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then((result) => {
       if (result.isConfirmed) {
         data.splice(index, 1);
-        localStorage.setItem("dataDiri", JSON.stringify(data));
+        saveData(data);
         renderData();
         Swal.fire("Terhapus!", "Data berhasil dihapus.", "success");
       }
@@ -67,38 +66,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.editData = (index) => {
-    let data = getData();
-    let item = data[index];
-
-    Swal.fire({
-      title: "Edit Data",
-      html: `
-        <input id="edit-nama" class="swal2-input" value="${item.nama}">
-        <input id="edit-umur" class="swal2-input" value="${item.umur}">
-        <input id="edit-alamat" class="swal2-input" value="${item.alamat}">
-      `,
-      focusConfirm: false,
-      preConfirm: () => {
-        return {
-          nama: document.getElementById("edit-nama").value,
-          umur: document.getElementById("edit-umur").value,
-          alamat: document.getElementById("edit-alamat").value,
-        };
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        data[index] = result.value;
-        saveData(data);
-        renderData();
-        Swal.fire("Tersimpan!", "Data berhasil diperbarui", "success");
-      }
-    });
+    window.location.href = `edit.html?index=${index}`;
   };
 
-  document.getElementById("toggle-theme").addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
+  // Theme toggle
+  const body = document.body;
+  const toggleBtn = document.getElementById("toggleTheme");
+
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark-mode");
+    toggleBtn.textContent = "☀️";
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    if (body.classList.contains("dark-mode")) {
+      toggleBtn.textContent = "☀️";
+      localStorage.setItem("theme", "dark");
+    } else {
+      toggleBtn.textContent = "🌙";
+      localStorage.setItem("theme", "light");
+    }
   });
 
+  // Export JSON
   document.getElementById("export-json").addEventListener("click", () => {
     let data = getData();
     let blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -110,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     link.click();
   });
 
+  // Export CSV
   document.getElementById("export-csv").addEventListener("click", () => {
     let data = getData();
     let csv =
@@ -122,8 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     link.click();
   });
 
-  searchInput.addEventListener("input", renderData);
-
+  // Sort table
   window.sortTable = (n) => {
     let data = getData();
     data.sort((a, b) => {
@@ -135,31 +126,63 @@ document.addEventListener("DOMContentLoaded", () => {
     renderData();
   };
 
+  searchInput.addEventListener("input", renderData);
+
   renderData();
 });
-window.editData = (index) => {
-  window.location.href = `edit.html?index=${index}`;
-};
 
-// Ambil elemen body dan tombol
-const body = document.body;
-const toggleBtn = document.getElementById("toggleTheme");
+document.addEventListener("DOMContentLoaded", () => {
+  const deleteAllBtn = document.getElementById("delete-all");
 
-// Cek preferensi sebelumnya
-if (localStorage.getItem("theme") === "dark") {
-  body.classList.add("dark-mode");
-  toggleBtn.textContent = "☀️";
-}
+  function renderData() {
+    let data = JSON.parse(localStorage.getItem("dataDiri")) || [];
+    const dataList = document.getElementById("data-list");
+    dataList.innerHTML = "";
 
-// Event listener untuk toggle
-toggleBtn.addEventListener("click", () => {
-  body.classList.toggle("dark-mode");
+    if (data.length === 0) {
+      dataList.innerHTML = `<tr><td colspan="4" style="text-align:center;">Belum ada data</td></tr>`;
+      return;
+    }
 
-  if (body.classList.contains("dark-mode")) {
-    toggleBtn.textContent = "☀️"; // Ubah ke mode terang
-    localStorage.setItem("theme", "dark");
-  } else {
-    toggleBtn.textContent = "🌙"; // Ubah ke mode gelap
-    localStorage.setItem("theme", "light");
+    data.forEach((item, index) => {
+      let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.nama}</td>
+        <td>${item.umur}</td>
+        <td>${item.alamat}</td>
+        <td>
+          <button class="btn btn-delete" onclick="deleteData(${index})">🗑️ Hapus</button>
+        </td>
+      `;
+      dataList.appendChild(row);
+    });
   }
+
+  deleteAllBtn.addEventListener("click", () => {
+    let data = JSON.parse(localStorage.getItem("dataDiri")) || [];
+
+    if (data.length === 0) {
+      Swal.fire("Info", "Tidak ada data untuk dihapus.", "info");
+      return;
+    }
+
+    Swal.fire({
+      title: "Yakin ingin hapus semua?",
+      text: "Data tidak bisa dikembalikan lagi!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Ya, hapus semua",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("dataDiri");
+        renderData();
+        Swal.fire("Terhapus!", "Semua data berhasil dihapus.", "success");
+      }
+    });
+  });
+
+  renderData();
 });

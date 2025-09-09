@@ -2,8 +2,10 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <title>Data Diri</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Data Diri</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- Tambahkan SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
@@ -16,30 +18,33 @@
         >
           ➕ Tambah Data
         </button>
-        <!-- <button id="toggle-theme" class="btn">🌙 / ☀️</button> -->
         <button id="toggleTheme" class="btn">🌙</button>
         <button id="export-json" class="btn">⬇️ Export JSON</button>
         <button id="export-csv" class="btn">⬇️ Export CSV</button>
+        <button id="delete-all" class="btn btn-delete">🗑️ Hapus Semua</button>
       </div>
       <input type="text" id="search" placeholder="🔍 Cari data..." />
     </header>
 
-    <main class="card">
+    <div class="card">
       <table>
         <thead>
           <tr>
-            <th onclick="sortTable(0)">Nama ⬍</th>
-            <th onclick="sortTable(1)">Umur ⬍</th>
-            <th onclick="sortTable(2)">Alamat ⬍</th>
+            <th>Nama</th>
+            <th>Umur</th>
+            <th>Alamat</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody id="data-list">
-          <!-- Data muncul di sini -->
+          <tr>
+            <td colspan="4" style="text-align: center">Belum ada data</td>
+          </tr>
         </tbody>
       </table>
-    </main>
+    </div>
 
+    <!-- Script harus terakhir -->
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,23 +1,27 @@
 const form = document.getElementById("tambah-form");
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 form.addEventListener("submit", function (e) {
-  e.preventDefault(); // biar nggak reload default
+  e.preventDefault();
 
-  const nama = document.getElementById("nama-input").value.trim();
-  const asal = document.getElementById("asal-input").value.trim();
-  const umur = document.getElementById("umur-input").value.trim();
+  const nama = document.getElementById("nama").value.trim();
+  const umur = document.getElementById("umur").value.trim();
+  const alamat = document.getElementById("alamat").value.trim();
 
-  const newTodo = {
-    id: Date.now(),
-    nama,
-    asal,
-    umur,
-  };
+  if (!nama || !umur || !alamat) {
+    Swal.fire("Error", "Semua field wajib diisi!", "error");
+    return;
+  }
 
-  todos.push(newTodo);
-  localStorage.setItem("todos", JSON.stringify(todos));
+  let data = JSON.parse(localStorage.getItem("dataDiri")) || [];
+  data.push({ nama, umur, alamat });
+  localStorage.setItem("dataDiri", JSON.stringify(data));
 
-  alert("Data berhasil ditambahkan!");
-  window.location.href = "index.html";
+  Swal.fire({
+    icon: "success",
+    title: "Berhasil",
+    text: "Data berhasil ditambahkan!",
+    confirmButtonColor: "#2575fc",
+  }).then(() => {
+    window.location.href = "index.html";
+  });
 });

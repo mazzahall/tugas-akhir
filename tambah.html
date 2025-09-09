@@ -35,37 +35,6 @@
       </form>
     </main>
 
-    <script>
-      const form = document.getElementById("tambah-form");
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const nama = document.getElementById("nama").value.trim();
-        const umur = document.getElementById("umur").value.trim();
-        const alamat = document.getElementById("alamat").value.trim();
-
-        if (!nama || !umur || !alamat) {
-          Swal.fire("Error", "Semua field wajib diisi!", "error");
-          return;
-        }
-
-        let data = JSON.parse(localStorage.getItem("dataDiri")) || [];
-
-        const newData = { nama, umur, alamat };
-        data.push(newData);
-
-        localStorage.setItem("dataDiri", JSON.stringify(data));
-
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil",
-          text: "Data berhasil ditambahkan!",
-          confirmButtonColor: "#2575fc",
-        }).then(() => {
-          window.location.href = "index.html";
-        });
-      });
-    </script>
+    <script src="tambah.js"></script>
   </body>
 </html>
